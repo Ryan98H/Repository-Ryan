@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>PDO</title>
+</head>
+<body>
+
+<div id="main">
+<h1>Formulier</h1>
+<div id="login">
+<h2>Voer uw Gegevens In.</h2>
+<hr/>
+<form action="" method="post">
+<label>Uw Naam :</label>
+<input type="text" name="stu_name" id="name" required="required" placeholder="Voer hier uw naam in."/><br /><br />
+<label>Uw Email :</label>
+<input type="email" name="stu_email" id="email" required="required" placeholder="UwNaam@UwEmail.nl"/><br/><br />
+<input type="submit" value=" Submit " name="submit"/><br />
+</form>
+</div>
+</div>
+
+<?php
+if(isset($_POST["submit"])){
+$hostname='localhost';
+$username='root';
+$password='';
+
+$stmt = $dbh->prepare("INSERT INTO mydatabase (Naam,EMAIL). VALUES (:Naam, :EMAIL)");
+$stmt->bindParam(':Naam', $Naam);
+$stmt->bindParam(':EMAIL', $EMAIL);
+
+// insert one row
+$Naam = 'one';
+$EMAIL = 1;
+$stmt->execute();
+
+// insert another row with different values
+$Naam = 'two';
+$EMAIL = 2;
+$stmt->execute();
+
+$stmt = $dbh->prepare("SELECT * FROM mydatabase where Naam = ?");
+if ($stmt->execute(array($_GET['Naam']))) {
+	while ($row = $stmt->fetch()) {
+		print_r($row);
+	}
+}
+
+$stmt = $dbh->prepare("SELECT * FROM mydatabase where EMAIL = ?");
+if ($stmt->execute(array($_GET['EMAIL']))) {
+	while ($row = $stmt->fetch()) {
+		print_r($row);
+	}
+}
+
+?>
+</body>
+</html>
